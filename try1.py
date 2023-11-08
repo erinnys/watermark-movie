@@ -6,14 +6,14 @@ Created on Wed Nov  8 11:17:28 2023
 """
 
 from PIL import Image, ImageDraw, ImageFont
-import imageio
+import cv2
 
 name='picturedata/4p_5th_hetero.0000'
 step=0.1
 movie=[]
 
 
-for i in range(9):
+for i in range(10):
 	img=Image.open('picturedata/4p_5th_hetero.0000{}.ppm'.format(i))
 	lengx,lengy=img.size
 	draw=ImageDraw.Draw(img)
@@ -22,10 +22,11 @@ for i in range(9):
 	w=fon.getlength(tex)
 	draw.text(xy=((lengx-w)/2,lengy/20),text=tex,fill='red',font=fon)
 	img.save('{}.jpg'.format(i))
-	movie.append(img)
+	movie.append('{}.jpg'.format(i))
 fps=5
-with imageio.get_writer('', fps=fps) as video:
-    for image in images:
-        frame = image.convert('RGB')
-        video.append_data(frame)
-
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+video = cv2.VideoWriter('movie.mp4', fourcc, fps, (lengx, lengy))
+for i in movie:
+    frame = cv2.imread(i)
+    video.write(frame)
+video.release()
