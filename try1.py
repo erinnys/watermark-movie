@@ -13,7 +13,7 @@ movie=[]
 
 
 for i in range(10):
-	img=Image.open('picturedata/4p_5th_hetero.0000{}.ppm'.format(i))
+	img=Image.open('picturedata/4p_5th_hetero.{}.ppm'.format(i))
 	lengx,lengy=img.size
 	draw=ImageDraw.Draw(img)
 	fon = ImageFont.truetype("arial.ttf", 100)
